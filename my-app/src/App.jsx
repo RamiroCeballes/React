@@ -1,19 +1,24 @@
-import './App.css'
+import { useEffect, useState } from 'react';
 
 export default function TodoList() {
+  const [posts, setPosts] = useState([]); // Estado para guardar los datos
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(r => r.json())
+      .then(data => {
+        setPosts(data); // Guardamos los datos en el estado
+      });
+  }, []);
+
   return (
-    <>
-      <h1>Tareas Pendientes de Hedy Lamarr</h1>
-      <img
-        src="https://i.imgur.com/yXOvdOSs.jpg"
-        alt="Hedy Lamarr"
-        className="photo"
-      />
+    <div>
+      <h1>Lista de Tareas</h1>
       <ul>
-        <li>Inventar nuevo semáforo</li>
-        <li>Ensayar la escena de la película</li>
-        <li>Mejorar la tecnología del espectro</li>
+        {posts.map(post => (
+          <li key={post.id}>{post.title}</li>
+        ))}
       </ul>
-    </>
+    </div>
   );
 }
