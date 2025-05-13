@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
 export default function TodoList() {
-  const [posts, setPosts] = useState([]); // Estado para guardar los datos
+  const [posts, setPosts] = useState([]);
   const url = 'https://pokeapi.co/api/v2';
   useEffect(() => {
     fetch(url + '/pokemon/ditto')
       .then(r => r.json())
       .then(data => {
-        setPosts(data); // Guardamos los datos en el estado
+        setPosts(data); 
       });
   }, []);
 
