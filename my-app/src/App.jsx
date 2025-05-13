@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function TodoList() {
+export default function Pokemon() {
   const [posts, setPosts] = useState([]);
   const [moves, setMoves] = useState([]);
   const url = 'https://pokeapi.co/api/v2';
@@ -9,14 +9,14 @@ export default function TodoList() {
       .then(r => r.json())
       .then((data) => {
         setMoves(data.moves);
-      })
-      .then(data => {
         setPosts(data); 
-      });
+      })
   }, []);
 
   return (
     <div>
+      <h1>Altura de Ditto</h1>
+      <p>{posts.height}</p>
       <h1>Movimientos de Ditto</h1>
       <ul>
         {moves.map((moveData, index) => (
