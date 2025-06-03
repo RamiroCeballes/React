@@ -8,10 +8,8 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import Container from '@mui/material/Container';
-import { useNavigate } from 'react-router-dom';
+import Navegacion from './nav/nav';
 
 interface Move {
   move: {
@@ -28,34 +26,24 @@ interface PokemonData {
   moves: Move[];
 }
 
-export default function App() {
+export default function Productos() {
 
   const [posts, setPosts] = useState<PokemonData | null>(null);
-  const [moves, setMoves] = useState<Move[]>([]);
   const [imagen, setImagen] = useState<string>('');
   const url = 'https://pokeapi.co/api/v2';
-
-  const navigate = useNavigate();
-
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
-    // lógica de envío...
-    navigate('/nav'); // vuelve a inicio al enviar
-  };
-
 
   useEffect(() => {
     fetch(url + '/pokemon/ditto')
       .then(r => r.json())
       .then((data: PokemonData) => {
-        setMoves(data.moves);
         setPosts(data);
         setImagen(data.sprites.back_default);
       });
   }, []);
 
   return (
-    <><AppBar position="static">
+    <><Navegacion></Navegacion>
+    <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -65,14 +53,6 @@ export default function App() {
         </Toolbar>
       </Container>
     </AppBar><Container sx={{ mt: 4 }}>
-        <Button variant="contained" onClick={handleSubmit}>Enviar</Button>
-        <Button variant="outlined" color="secondary">Cancelar</Button>
-        <Button variant="text" disabled>Desactivado</Button>
-        <Button startIcon={<DeleteIcon />} color="error">
-          Borrar
-        </Button>
-        <Button endIcon={<EditIcon />}>Editar</Button>
-
         <TextField
           label="Nombre"
           variant="outlined"
@@ -93,11 +73,6 @@ export default function App() {
         <p>{posts?.height ?? 'Cargando...'}</p>
 
         <Typography variant="h6">Movimientos de Ditto</Typography>
-        <ul>
-          {moves.map((moveData, index) => (
-            <li key={index}>{moveData.move.name}</li>
-          ))}
-        </ul>
 
         {imagen && <img src={imagen} alt="Ditto" />}
       </Container></>
