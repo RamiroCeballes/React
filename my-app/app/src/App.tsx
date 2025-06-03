@@ -11,6 +11,7 @@ import Toolbar from '@mui/material/Toolbar';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Container from '@mui/material/Container';
+import { useNavigate } from 'react-router-dom';
 
 interface Move {
   move: {
@@ -34,6 +35,14 @@ export default function App() {
   const [imagen, setImagen] = useState<string>('');
   const url = 'https://pokeapi.co/api/v2';
 
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    // lógica de envío...
+    navigate('/nav'); // vuelve a inicio al enviar
+  };
+
   useEffect(() => {
     fetch(url + '/pokemon/ditto')
       .then(r => r.json())
@@ -55,7 +64,7 @@ export default function App() {
         </Toolbar>
       </Container>
     </AppBar><Container sx={{ mt: 4 }}>
-        <Button variant="contained">Enviar</Button>
+        <Button variant="contained" onClick={handleSubmit}>Enviar</Button>
         <Button variant="outlined" color="secondary">Cancelar</Button>
         <Button variant="text" disabled>Desactivado</Button>
         <Button startIcon={<DeleteIcon />} color="error">
